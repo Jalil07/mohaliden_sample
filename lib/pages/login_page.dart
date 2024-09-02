@@ -9,6 +9,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final _formKey = GlobalKey<FormState>();
   String _email = '';
   String _password = '';
+  bool _isPasswordVisible = false;  // State to track password visibility
 
   void _login() {
     if (_formKey.currentState!.validate()) {
@@ -44,17 +45,18 @@ class _LoginScreenState extends State<LoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Container(
-                  padding: EdgeInsets.all(0),
-                  margin: EdgeInsets.fromLTRB(0, 0, 0, 100),
-                  decoration: BoxDecoration(
-                    color: Colors.blueGrey,
-                    borderRadius: BorderRadius.circular(999),
-                  ),
-                  child: const Icon(
-                    Icons.person,
-                    size: 95,
-                    color: Colors.white,
+                Image.asset(
+                  'assets/images/profile.png',
+                  height: 155,
+                  width: 155,
+                ),
+                SizedBox(height: 24),
+                const Text(
+                  'Mohalliden Hamza',
+                  style: TextStyle(
+                    fontSize: 22,
+                    fontFamily: 'Sevillana',
+                    fontWeight: FontWeight.bold,
                   ),
                 ),
                 SizedBox(height: 24),
@@ -67,7 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
-                      return 'Please enter your email';
+                      return 'Please enter your phone number';
                     }
                     return null;
                   },
@@ -95,11 +97,21 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 16),
                 TextFormField(
-                  obscureText: true,
-                  decoration: const InputDecoration(
+                  obscureText: !_isPasswordVisible,
+                  decoration: InputDecoration(
                     labelText: 'Password',
                     border: OutlineInputBorder(),
                     prefixIcon: Icon(Icons.lock),
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _isPasswordVisible ? Icons.visibility : Icons.visibility_off,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _isPasswordVisible = !_isPasswordVisible;
+                        });
+                      },
+                    ),
                   ),
                   validator: (value) {
                     if (value == null || value.isEmpty) {
@@ -127,7 +139,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: Text('Login'),
                   style: ElevatedButton.styleFrom(
                     padding:
-                        EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                    EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                     textStyle: TextStyle(fontSize: 18),
                   ),
                 ),
