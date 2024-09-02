@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:mohaliden_sample/pages/sign_up_page.dart';
+
+import 'home_page.dart';
 
 class LoginScreen extends StatefulWidget {
   @override
@@ -135,14 +138,23 @@ class _LoginScreenState extends State<LoginScreen> {
                 ),
                 SizedBox(height: 24),
                 ElevatedButton(
-                  onPressed: _login,
+                  onPressed: () {
+                    if (_formKey.currentState!.validate()) {
+                      _formKey.currentState!.save();
+                      // Implement your login logic here, then navigate to HomePage
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SignUpPage()),
+                      );
+                    }
+                  },
                   child: Text('Login'),
                   style: ElevatedButton.styleFrom(
-                    padding:
-                    EdgeInsets.symmetric(horizontal: 100, vertical: 15),
+                    padding: EdgeInsets.symmetric(horizontal: 100, vertical: 15),
                     textStyle: TextStyle(fontSize: 18),
                   ),
-                ),
+                )
+
               ],
             ),
           ),
